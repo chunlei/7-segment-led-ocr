@@ -9,8 +9,8 @@ from pytesseract import image_to_string
 from PIL import Image, ImageGrab
 
 LANG = 'token'
-CTL_BTN_CENTER = (1220, 1024)
 TOKEN_AREA = (1520, 850, 1703, 914)
+CTL_BTN_CENTER = (1220, 1024)
 INTERVAL = 20
 
 def recognize(digital):
@@ -27,11 +27,12 @@ def clickPlay():
     time.sleep(0.5)
 
 def main():
-    btnX, btnY = CTL_BTN_CENTER
-    controlBtn = ImageGrab.grab((btnX, btnY, btnX + 1, btnY + 1))
-    pause = (255, 144, 29) == controlBtn.getpixel((0,0))
-    if (pause):
-        clickPlay()
+    # 这是针对小蚁摄像头，会自动暂停，监测到暂停的话，模拟鼠标点击播放按钮
+    # btnX, btnY = CTL_BTN_CENTER
+    # controlBtn = ImageGrab.grab((btnX, btnY, btnX + 1, btnY + 1))
+    # pause = (255, 144, 29) == controlBtn.getpixel((0,0))
+    # if (pause):
+    #     clickPlay()
 
     pic = ImageGrab.grab(TOKEN_AREA)
     pic.save('token.png')

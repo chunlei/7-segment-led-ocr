@@ -2,7 +2,7 @@ const router = require('koa-router')();
 const koaBody = require('koa-body');
 const serve = require('koa-static');
 const session = require('koa-session');
-const sendFile = require('koa-sendfile')
+const sendFile = require('koa-sendfile');
 const Koa = require('koa');
 
 const moment = require('moment');
@@ -11,7 +11,8 @@ const path = require('path');
 const fs = require('fs');
 const mineType = require('mime-types');
 
-const ***REMOVED*** = require('./lib/***REMOVED***Offline');
+const ***REMOVED***Auth = require('./lib/***REMOVED***Offline');
+const testAuth = require('./lib/test');
 
 
 const app = module.exports = new Koa();
@@ -29,7 +30,10 @@ app.use(async function(ctx, next) {
 app.use(session(app));
 app.use(koaBody());
 
-app.use(***REMOVED***);
+// for ***REMOVED***-internal-network auth
+// app.use(***REMOVED***Auth);
+// for test auth
+app.use(testAuth);
 
 // serve files from ./public
 app.use(serve(path.join(__dirname, 'public')));
@@ -145,6 +149,7 @@ function userLog(userName) {
             const logList = nextLog = fs.readFileSync(logPath).toString().split('\n');
             const lastLog = _.last(logList).split(',');
             const [lastUserName, accessTime] = lastLog;
+            // 如果同一个用户，请求间隔没超过180秒就不记录
             if (moment().unix() - moment(accessTime).unix() > 180 || lastUserName !== userName) {
                 nextLog = nextLog.concat(thisLog);
             }
