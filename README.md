@@ -1,5 +1,5 @@
 # 7-segment-led-ocr
-Home Camera + Python + OpenCV + Tesseract + WebSite - 企业公共token（RSA、OTP）网络共享
+企业公共token（RSA、OTP）网络共享
 
 # 整体思路
 - 小蚁摄像头1080P对着token监控，PC上打开小蚁监控客户端，运行Python脚本，从监控画面截屏出token数字区域
