@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Token</title>
+</head>
+<body>
+<style>
+    .container {
+        width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+</style>
+    <div class="container">
+        <div class="origin">
+            <div class="label">token图：</div>
+            <div class="control">
+                <img src="" id="origin" alt="token图">
+            </div>
+        </div>
+        <div class="threshold">
+            <div class="label">二值化：</div>
+            <div class="control">
+                <img src="" id="threshold" alt="二值化">
+            </div>
+        </div>
+        <div class="text">
+            <div class="label">PIN + TOKEN:</div>
+            <div class="control">
+                <input type="text" id="text">
+                <button type="button" id="copy" data-clipboard-target="#text">复制</button>
+                <button type="button" id="wrong">感谢报错</button>
+            </div>
+        </div>
+        <div class="feedback" style="display: none">
+            <div class="label">请输入正确的TOKEN值:</div>
+            <div class="control">
+                <form action="/tokenFeedback" method="post">
+                    <input type="text" name="feedback" required pattern="\d{6}" title="6位数字">
+                    <input type="hidden" name="logKey" id="logKey">
+                    <button type="submit">提交反馈</button>
+                </form>
+            </div>
+        </div>
+        <div class="log" style="margin-top: 50px;">
+            <div class="label">用户日志:</div>
+            <div class="control">
+                <form action="/userLog" method="get">
+                    <input type="text" name="date" required pattern="\d{8}" title="6位年月日数字" id="date">
+                    <button type="submit">下载</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.js"></script>
+    <script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script>
+        const PIN = '000000';
+
+        // 页面初始化
+        fetch('/token', {method: 'POST', credentials: 'same-origin'})
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) {
+                    return alert('出错了' + JSON.stringify(res.error));
+                }
+                const data = res.data;
+                $('#origin').attr('src', data.origin);
+                $('#threshold').attr('src', data.threshold);
+                $('#text').val(PIN + data.text);
+                $('#logKey').val(data.logKey);
+            });
+
+        // 初始化复制按钮
+        new Clipboard('#copy');
+
+        // 初始化报错按钮
+        $('#wrong').on('click', () => {
+            $('.feedback').show();
+        });
+
+        // 初始化下载日志日期
+        const date = new Date();
+        const month = date.getMonth() + 1;
+        $('#date').val('' + date.getFullYear() + (month < 10 ? '0' + month : month) + date.getDate());
+    </script>
+</body>
+</html>
