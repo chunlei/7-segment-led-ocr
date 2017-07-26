@@ -1,5 +1,5 @@
 /**
- * Created by ***REMOVED*** on 17/7/17.
+ * Created by baidu on 17/7/17.
  */
 module.exports = async function(ctx, next) {
     if (!ctx.session.userName) {

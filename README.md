@@ -22,8 +22,3 @@
 - node app.js
 - 支持记录日志
 - 支持反馈错误，用于后续强化训练
-
-## 支持Offline UUAP
-- 仅限***REMOVED***内网访问的权限验证，取消注释app.use(***REMOVED***Auth);
-- 不需要申请UUAP，配host token.***REMOVED***.***REMOVED*** server-ip，变相实现UUAP线下环境登录
-- 通过 http://token.***REMOVED***.***REMOVED***:3000 访问

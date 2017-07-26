@@ -11,7 +11,7 @@ const path = require('path');
 const fs = require('fs');
 const mineType = require('mime-types');
 
-const ***REMOVED***Auth = require('./lib/***REMOVED***Offline');
+// const uuapAuth = require('./lib/uuapOffline');
 const testAuth = require('./lib/test');
 
 
@@ -30,8 +30,6 @@ app.use(async function(ctx, next) {
 app.use(session(app));
 app.use(koaBody());
 
-// for ***REMOVED***-internal-network auth
-// app.use(***REMOVED***Auth);
 // for test auth
 app.use(testAuth);
 
